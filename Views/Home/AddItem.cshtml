@@ -1,0 +1,90 @@
+﻿@model List<Item>
+
+<h1>Ürün Ekle</h1>
+<form asp-action="additem">
+    <input required type="text" class="form-control mb-2" name="Name" placeholder="Ürün ismi">
+    <button type="submit" class="btn btn-success btn-sm mb-2">Ekle</button>
+</form>
+
+<div class="search-container">
+    <form action="details" id="redirectForm" autocomplete="off">
+        <input list="itemList" id="redirectData" type="text" placeholder="Ürün Ara" required>
+        <datalist id="itemList">
+            @foreach (var item in Model)
+            {
+                <option value="@item.Name" data-id="@item.Id"></option>
+            }
+        </datalist>
+        <button type="submit" class="btn btn-primary">Git</button>
+    </form>
+</div>
+
+<table class="table table-dark table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Ürün</th>
+            <th scope="col">Fotoğraf</th>
+            <th scope="col">İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr onclick="window.location.href='/home/details/@item.Id';" style="cursor: pointer;">
+                <td>@item.Name</td>
+                <td><img src="/uploads/@item.ImgPath" alt="@item.Name" style="width: 70px; height:70px;" /></td>
+                <td>
+                    <a href="/home/itemdetail/@item.Id" onclick="event.stopPropagation();" class="edit btn btn-warning">Düzenle</a>
+                    <a href="/home/delete/@item.Id" onclick="event.stopPropagation(); return confirm('Emin misiniz?')" class="btn btn-danger">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    // Form gönderimini güncelleyerek ID değerini al
+    document.getElementById('redirectData').addEventListener('change', function () {
+        const selectedOption = Array.from(document.querySelectorAll('#itemList option')).find(option => option.value === this.value);
+        if (selectedOption) {
+            // İlgili ID'yi gizli bir inputa yazıyoruz
+            const hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 'Id';
+            hiddenInput.value = selectedOption.getAttribute('data-id');
+            redirectForm.appendChild(hiddenInput);
+        }
+        redirectForm.submit();
+    });
+</script>
+
+<style>
+    .search-container {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+
+        .search-container input[type="text"] {
+            width: 200px;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+
+        .search-container button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+            .search-container button:hover {
+                background-color: #218838;
+            }
+</style>

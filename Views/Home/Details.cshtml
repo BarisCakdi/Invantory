@@ -1,0 +1,6 @@
+﻿@model Item
+
+<p>Ürün isim: @Model.Name</p>
+<p>Oluşturulma tarihi: @Model.Created</p>
+<p>Son kullanma tarihi: @Model.ExpirationDate</p>
+<p>Ürün foto: <img src="/uploads/@Model.ImgPath" alt="@Model.Name" style="width: 200px; height:200px;" /></p>

@@ -1,0 +1,66 @@
+﻿@model Tuple<List<Location>, List<Section>, Place>
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="row" style="gap: 20px; justify-content: center; flex-wrap: nowrap;">
+    <div class="col-4">
+        <form action="Admin/LocationAdd" enctype="multipart/form-data" method="post" style="background: linear-gradient(145deg, #e0e0e0, #f7f7f7); padding: 30px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);" autocomplete="off">
+            <div class="mb-3">
+                <label for="Name" style="font-weight: 600; color: #495057;">Location Name</label>
+                <input type="text" id="Name" name="Name" required placeholder="Enter Location Name" class="form-control" style="padding: 12px; border: 1px solid #ced4da; border-radius: 8px; background-color: #fdfdfd; transition: all 0.3s; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);" />
+            </div>
+            <button type="submit" class="btn btn-primary" style="padding: 12px 30px; font-size: 18px; background-color: #007bff; border: none; border-radius: 8px; box-shadow: 0 8px 15px rgba(0, 123, 255, 0.3); transition: all 0.3s; font-weight: 600;">
+                Add Location
+            </button>
+        </form>
+    </div>
+
+    <div class="col-4">
+        <form action="/Admin/SectionAdd" enctype="multipart/form-data" method="post" style="background: linear-gradient(145deg, #e0e0e0, #f7f7f7); padding: 30px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);" autocomplete="off">
+            <div class="mb-3">
+                <label for="LocationId" style="font-weight: 600; color: #495057;">Select Location</label>
+                <select id="LocationId" name="LocationId" class="form-control" required style="padding: 12px; border: 1px solid #ced4da; border-radius: 8px;">
+                    <option value="" disabled selected>Select a location</option>
+                    @foreach (var location in Model.Item1)
+                    {
+                        <option value="@location.Id">@location.Name</option>
+                    }
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="Name" style="font-weight: 600; color: #495057;">Section Name</label>
+                <input type="text" id="Name" name="Name" required placeholder="Enter Section Name" class="form-control" style="padding: 12px; border: 1px solid #ced4da; border-radius: 8px; background-color: #fdfdfd; transition: all 0.3s; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);" />
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="padding: 12px 30px; font-size: 18px; background-color: #007bff; border: none; border-radius: 8px; box-shadow: 0 8px 15px rgba(0, 123, 255, 0.3); transition: all 0.3s; font-weight: 600;">
+                Add Section
+            </button>
+        </form>
+    </div>
+
+    <div class="col-4">
+        <form action="Admin/PlaceAdd" enctype="multipart/form-data" method="post" style="background: linear-gradient(145deg, #e0e0e0, #f7f7f7); padding: 30px; border-radius: 15px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);" autocomplete="off">
+            <div class="mb-3">
+                <label for="SectionId" style="font-weight: 600; color: #495057;">Select Section</label>
+                <select id="SectionId" name="SectionId" class="form-control" required style="padding: 12px; border: 1px solid #ced4da; border-radius: 8px;">
+                    <option value="" disabled selected>Select a section</option>
+                    @foreach (var sections in Model.Item2) 
+                    {
+                        <option value="@sections.Id">@sections.Name</option>
+                    }
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="Name" style="font-weight: 600; color: #495057;">Place Name</label>
+                <input type="text" id="Name" name="Name" required placeholder="Enter Place Name" class="form-control" style="padding: 12px; border: 1px solid #ced4da; border-radius: 8px; background-color: #fdfdfd; transition: all 0.3s; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);" />
+            </div>
+            <button type="submit" class="btn btn-primary" style="padding: 12px 30px; font-size: 18px; background-color: #007bff; border: none; border-radius: 8px; box-shadow: 0 8px 15px rgba(0, 123, 255, 0.3); transition: all 0.3s; font-weight: 600;">
+                Add Place
+            </button>
+        </form>
+    </div>
+</div>

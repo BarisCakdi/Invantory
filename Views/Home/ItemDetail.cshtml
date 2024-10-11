@@ -1,0 +1,39 @@
+﻿@model Item
+
+<h2>Ürün Düzenleme Formu</h2>
+
+<form asp-action="ItemDetail" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <input type="hidden" name="sameImg" value="@Model.ImgPath" />
+
+    <div class="mb-3">
+        <label for="Name" class="form-label">Ürün İsmi</label>
+        <input type="text" value="@Model.Name" class="form-control" name="Name" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="Quantity" class="form-label">Adet</label>
+        <input type="number" value="@Model.Quantity" class="form-control" name="Quantity" required>
+    </div>
+
+    @if (!string.IsNullOrEmpty(Model.ImgPath))
+    {
+        <div class="mb-3">
+            <img src="/uploads/@Model.ImgPath" alt="@Model.Name" style="width: 70px; height:70px;" />
+            <br />
+            <small>Fotoğrafı değiştirmek isterseniz yeni bir fotoğraf seçin</small>
+        </div>
+    }
+
+    <div class="mb-3">
+        <label for="Photo" class="form-label">Fotoğraf (Opsiyonel)</label>
+        <input type="file" class="form-control" name="Photo">
+    </div>
+
+    <div class="mb-3">
+        <label for="ExpirationDate" class="form-label">Son Kullanım Tarihi</label>
+        <input type="date" value="@Model.ExpirationDate?.ToString("yyyy-MM-dd")" class="form-control" name="ExpirationDate" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Kaydet</button>
+</form>
